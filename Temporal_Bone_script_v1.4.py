@@ -1,6 +1,6 @@
 import time
 from pathlib import Path
-for path in Path('/home/caio/Dropbox/task/dataset/test.ai/test').rglob('*.nii.gz'):
+for path in Path('PATH_TO_FILES_FOLDER').rglob('*.nii.gz'):
 	[success, masterVolumeNode] = slicer.util.loadVolume(str(path), returnNode=True)
 	# Resample the volume to 0.25mm spacing
 	parameters = {"outputPixelSpacing":"0.25,0.25,0.25", "InputVolume":masterVolumeNode,"interpolationType":'linear',"OutputVolume":masterVolumeNode}
@@ -23,7 +23,7 @@ for path in Path('/home/caio/Dropbox/task/dataset/test.ai/test').rglob('*.nii.gz
 	# NVIDIA auto segmentation
 	segmentEditorWidget.setActiveEffectByName("Nvidia AIAA")
 	effect = segmentEditorWidget.activeEffect()
-	serverUrl = "http://192.168.0.105/v1/models"
+	serverUrl = "http://127.0.1.1/v1/models"
 	effect.self().ui.serverComboBox.currentText = serverUrl
 	effect.self().onClickFetchModels()
 	effect.self().ui.segmentationModelSelector.currentText = "inner_ear"
@@ -121,6 +121,6 @@ for path in Path('/home/caio/Dropbox/task/dataset/test.ai/test').rglob('*.nii.gz
 	effect.self().onApply()
 	segmentEditorNode.MasterVolumeIntensityMaskOff()
 	seg = getNode('Segmentation')
-	saveNode(seg, '/home/caio/Dropbox/task/dataset/test.ai/test/seg/'+str(path.name[0:-7])+'.seg.nrrd')
+	saveNode(seg, 'PATH_TO_SEGMENTATIONS_FOLDER/'+str(path.name[0:-7])+'.seg.nrrd')
 
 
