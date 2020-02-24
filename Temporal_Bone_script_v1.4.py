@@ -5,9 +5,7 @@ for path in Path('PATH_TO_FILES_FOLDER').rglob('*.nii.gz'):
 	# Resample the volume to 0.25mm spacing
 	parameters = {"outputPixelSpacing":"0.25,0.25,0.25", "InputVolume":masterVolumeNode,"interpolationType":'linear',"OutputVolume":masterVolumeNode}
 	slicer.cli.run(slicer.modules.resamplescalarvolume, None, parameters)
-	masterVolumeNode
 	time.sleep(1)
-	masterVolumeNode
 	# Create segmentation with Bony labyrinth segment
 	segmentationNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLSegmentationNode")
 	segmentationNode.CreateDefaultDisplayNodes() # only needed for display
@@ -23,7 +21,7 @@ for path in Path('PATH_TO_FILES_FOLDER').rglob('*.nii.gz'):
 	# NVIDIA auto segmentation
 	segmentEditorWidget.setActiveEffectByName("Nvidia AIAA")
 	effect = segmentEditorWidget.activeEffect()
-	serverUrl = "http://127.0.1.1/v1/models"
+	serverUrl = "http://LINK/v1/models"
 	effect.self().ui.serverComboBox.currentText = serverUrl
 	effect.self().onClickFetchModels()
 	effect.self().ui.segmentationModelSelector.currentText = "inner_ear"
@@ -67,7 +65,7 @@ for path in Path('PATH_TO_FILES_FOLDER').rglob('*.nii.gz'):
 	# Margin effect
 	segmentEditorWidget.setActiveEffectByName("Margin")
 	effect = segmentEditorWidget.activeEffect()
-	effect.setParameter("MarginSizeMm", 2)
+	effect.setParameter("MarginSizeMm", 2.3)
 	effect.self().onApply()
 	segmentEditorNode.MasterVolumeIntensityMaskOff()
 	## Segmenting the other structures
