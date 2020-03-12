@@ -120,5 +120,4 @@ for path in Path('PATH_TO_FILES_FOLDER').rglob('*.nii.gz'):
 	segmentEditorNode.MasterVolumeIntensityMaskOff()
 	seg = getNode('Segmentation')
 	saveNode(seg, 'PATH_TO_SEGMENTATIONS_FOLDER/'+str(path.name[0:-7])+'.seg.nrrd')
-
-
+	slicer.mrmlScene.Clear(0)
