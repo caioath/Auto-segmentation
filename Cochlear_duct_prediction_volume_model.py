@@ -2,7 +2,7 @@ path_to_volumes = 'PATH_TO_VOLUMES'
 path_to_save_csv = 'PATH_TO_SAVE_CSV'
 path_to_save_segmentations = 'PATH_TO_SAVE_SEGMENTATIONS'
 path_to_save_models = 'PATH_TO_SAVE_MODELS'
-nvidia_server_adress = 'NVIDIA_SERVER_ADRESS'
+nvidia_server_address = 'NVIDIA_SERVER_ADDRESS'
 from pathlib import Path
 for path in Path(path_to_volumes).rglob('*.nrrd'):
 	[success, masterVolumeNode] = slicer.util.loadVolume(str(path), returnNode=True)
@@ -20,7 +20,7 @@ for path in Path(path_to_volumes).rglob('*.nrrd'):
 	# NVIDIA auto segmentation
 	segmentEditorWidget.setActiveEffectByName("Nvidia AIAA")
 	effect = segmentEditorWidget.activeEffect()
-	serverUrl = nvidia_server_adress
+	serverUrl = nvidia_server_address
 	effect.self().ui.serverComboBox.currentText = serverUrl
 	effect.self().onClickFetchModels()
 	effect.self().ui.segmentationModelSelector.currentText = "cochlear_duct"
