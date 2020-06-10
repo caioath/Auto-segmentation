@@ -1,11 +1,9 @@
-import time
 from pathlib import Path
 for path in Path('PATH_TO_FILES_FOLDER').rglob('*.nii.gz'):
 	[success, masterVolumeNode] = slicer.util.loadVolume(str(path), returnNode=True)
 	# Resample the volume to 0.25mm spacing
 	parameters = {"outputPixelSpacing":"0.25,0.25,0.25", "InputVolume":masterVolumeNode,"interpolationType":'linear',"OutputVolume":masterVolumeNode}
-	slicer.cli.run(slicer.modules.resamplescalarvolume, None, parameters)
-	time.sleep(1)
+	slicer.cli.runSync(slicer.modules.resamplescalarvolume, None, parameters)
 	# Create segmentation with Bony labyrinth segment
 	segmentationNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLSegmentationNode")
 	segmentationNode.CreateDefaultDisplayNodes() # only needed for display
@@ -68,7 +66,7 @@ for path in Path('PATH_TO_FILES_FOLDER').rglob('*.nii.gz'):
 	effect.setParameter("MarginSizeMm", 2.3)
 	effect.self().onApply()
 	segmentEditorNode.MasterVolumeIntensityMaskOff()
-	## Segmenting the other structures
+	## Segmenting other structures
 	segmentEditorWidget.setActiveEffectByName("Nvidia AIAA")
 	effect = segmentEditorWidget.activeEffect()
 	# Autosegmentation of Ossicles
